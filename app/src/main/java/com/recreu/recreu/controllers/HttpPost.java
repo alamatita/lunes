@@ -54,6 +54,9 @@ public class HttpPost extends AsyncTask<String, Void, String>{
             osw.flush();
             osw.close();
             int statusCode = httpCon.getResponseCode();
+            System.out.println("JSON: "+json);
+            System.out.println("URL : "+ url);
+            System.out.println("STATUS : "+statusCode);
 
             InputStream is = null;
             if (statusCode >= 400) {
@@ -86,7 +89,7 @@ public class HttpPost extends AsyncTask<String, Void, String>{
         String result = "nada";
             try {
                 result =  new Scanner(httpCon.getInputStream(), "UTF-8").useDelimiter("\\A").next();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 result="nada";
             }

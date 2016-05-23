@@ -51,6 +51,17 @@ public class Usuario implements Serializable {
         esAdministrador=false;
     }
 
+    public void agregarDatos(String lastUpdate, int usuarioId, String createdAt, boolean disponibilidad, boolean esActivo){
+        this.lastUpdate=lastUpdate;
+
+        this.usuarioId=usuarioId;
+        this.createdAt=createdAt;
+        this.disponibilidad=disponibilidad;
+        this.esActivo=esActivo;
+
+
+    }
+
     public Usuario(String apellidoMaterno, String apellidoPaterno, String primerNombre, String segundoNombre, String correo, String password, String fechaNacimiento,boolean sexo, boolean isAd){
         this.apellidoMaterno=apellidoMaterno;
         this.apellidoPaterno=apellidoPaterno;

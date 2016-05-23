@@ -92,11 +92,11 @@ public class NuevaActividad extends Fragment implements View.OnClickListener {
                 String cupos = personitas.getText().toString();
                 maximoPersonas = Integer.parseInt(cupos);
 
-                System.out.println("FECHITA CALENDARIO : " + fecha.getText().toString());
+               //System.out.println("FECHITA CALENDARIO : " + fecha.getText().toString());
 
 
                 strgDuracion = "" + duracion.getText().toString() + ":00-03:00";
-                strgDuracion = "01:30:00-03:00";
+                strgDuracion = "01:30:00";
                 if (titulo.getText().toString().length() == 0) {
                     Toast.makeText(c, " Debe ingresar un titulo ", Toast.LENGTH_SHORT).show();
                 }
@@ -110,11 +110,12 @@ public class NuevaActividad extends Fragment implements View.OnClickListener {
                     Toast.makeText(c, " Debe ingresar cupos ", Toast.LENGTH_SHORT).show();
                 }
 
+                String Fechafinal=""+fecha.getText().toString()+"T"+horainicio.getText().toString()+":00-03:00";
 
                 // AGREGARLE MAXIMO PERSONAAS al json
                 String nuevaActividad = "{\"cuerpoActividad\":\"" + cuerpo.getText().toString() +
                         //"\",\"duracionEstimada\":\""+strgDuracion+
-                        "\",\"duracionEstimada\":\" " + strgDuracion + " \" ,\"fechaInicio\":\"" + fecha.getText().toString() + "\"," +
+                        "\",\"duracionEstimada\":\" " + strgDuracion + "\" ,\"fechaInicio\":\"" + Fechafinal + "\"," +
                         //  "\",\"fechaInicio\":\""+strgFecha+
                         "\"requerimientosActividad\":\"" + requisitos.getText().toString() +
                         "\",\"tipo\":{ \"tipoId\":2}" +
@@ -123,7 +124,6 @@ public class NuevaActividad extends Fragment implements View.OnClickListener {
                         // "\",\"organizador\":{ \""+usuario.getUsuarioId()+"\"}"+ //               PONER ESTA LINEA CUANDO SE INGRESE LOGIN
                         ", \"ubicacionActividadX\":" + x +
                         ",\"ubicacionActividadY\":" + y + "}";
-                System.out.println(" AGREGANDO ACTIVIDAD: " + nuevaActividad);
 
                 try {
                     SystemUtilities su = new SystemUtilities(getActivity().getApplicationContext());

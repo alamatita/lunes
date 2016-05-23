@@ -28,6 +28,7 @@ import cl.recreu.recreu.taller_android_bd.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class IniciarSesion extends AppCompatActivity {
     private AutoCompleteTextView correo;
     private EditText password;
@@ -190,6 +191,8 @@ public class IniciarSesion extends AppCompatActivity {
                     System.out.println("Respuesta json = "+response);
                     JSONObject aux =new JSONObject(response);
                     usuario = new Usuario(aux.getString("apellidoMaterno"),aux.getString("apellidoPaterno"),aux.getString("primerNombre"),aux.getString("segundoNombre"),aux.getString("correo"),aux.getString("password"),aux.getString("fechaNacimiento"), aux.getBoolean("sexo"), aux.getBoolean("esAdministrador"));
+                    usuario.agregarDatos(aux.getString("lastUpdate"), aux.getInt("usuarioId"),aux.getString("createdAt"),aux.getBoolean("disponibilidad"),aux.getBoolean("esActivo"));
+
                     showProgress(false);
                     termino();
                 } catch (Exception e) {
