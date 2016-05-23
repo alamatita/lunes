@@ -38,7 +38,8 @@ public class HttpDelete extends AsyncTask<String, Void, String> {
             connection.setDoInput(true);
             connection.connect();
             int statusCode = connection.getResponseCode();
-            if (statusCode==200) return "OK";
+            System.out.println("CONSULTA: "+ urls[0]);
+            if (statusCode==200) return "Eliminado exitosamente";
             return "ERROR";
         } catch (MalformedURLException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());

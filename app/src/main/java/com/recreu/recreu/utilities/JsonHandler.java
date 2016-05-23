@@ -78,6 +78,27 @@ public class JsonHandler {
         }
         return null;
     }
+    public Usuario[] getUsuarios(String actividades) {
+        try {
+            JSONArray ja = new JSONArray(actividades);
+            Usuario[] arrayUsuario = new Usuario[ja.length()];
+            Usuario usuario;
 
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jsonUsuario = ja.getJSONObject(i);
+                usuario = new Usuario(jsonUsuario.getInt("usuarioId"),jsonUsuario.getString("primerNombre"),jsonUsuario.getString("apellidoPaterno"));
+                arrayUsuario[i] = usuario;
+
+            }
+            System.out.println("Creadala lista de usuarios");
+            return arrayUsuario;
+
+
+        } catch (JSONException e) {
+            Log.e("ERROR", this.getClass().toString() + " " + e.toString());
+        }
+        return null;
+    }
 
 }

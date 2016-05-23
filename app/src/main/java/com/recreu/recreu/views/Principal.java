@@ -1,7 +1,10 @@
 package com.recreu.recreu.views;
 
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,11 +17,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.recreu.recreu.MainActivity;
 import com.recreu.recreu.Modelos.Usuario;
 import com.recreu.recreu.controllers.HttpDelete;
 import com.recreu.recreu.utilities.SystemUtilities;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cl.recreu.recreu.taller_android_bd.R;
 
@@ -161,6 +168,7 @@ public class Principal extends AppCompatActivity {
         }
 
     }
+
 
 }
 

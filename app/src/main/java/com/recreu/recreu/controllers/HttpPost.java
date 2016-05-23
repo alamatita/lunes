@@ -96,5 +96,6 @@ public class HttpPost extends AsyncTask<String, Void, String>{
             Intent intent = new Intent("httpPost").putExtra("jsonRespuesta", result);
             context.sendBroadcast(intent);
            httpCon.disconnect();
+
     }
 }

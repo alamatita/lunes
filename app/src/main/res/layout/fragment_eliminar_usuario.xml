@@ -1,47 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:weightSum="1"
-    android:focusable="false"
-    android:focusableInTouchMode="false"
-    android:clickable="true"
-    android:rowOrderPreserved="false">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <GridView
+        android:id="@+id/grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Estoy eliminando usuario... desde fragment" />
+        android:layout_height="match_parent"
+        android:columnWidth="130dp"
+        android:horizontalSpacing="1dp"
+        android:numColumns="auto_fit"
+        android:padding="5dip"
+        android:verticalSpacing="5dip"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:layoutMode="clipBounds"
+        android:textAlignment="center"
+        android:stretchMode="columnWidth" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Ingrese el id del usuario a eliminar"
-            android:layout_gravity="center_horizontal" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/idUsuario"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Eliminar"
-            android:id="@+id/botonEliminar"
-            android:onClick="eliminarUsuario"
-            android:layout_gravity="center_horizontal" />
-
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
 
 
