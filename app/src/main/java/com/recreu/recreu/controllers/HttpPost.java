@@ -1,5 +1,6 @@
 package com.recreu.recreu.controllers;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -60,13 +61,11 @@ public class HttpPost extends AsyncTask<String, Void, String>{
 
             InputStream is = null;
             if (statusCode >= 400) {
-                is = httpCon.getErrorStream();
-                //System.out.println("error : "+is);
                 return "Error interno del servidor";
 
             } else {
-                if (statusCode==204 || statusCode==200) return "OK";
-                else return "Ocurrió n problema al agregar ";
+                if (statusCode==204 || statusCode==200) return "Consulta realizada con exito";
+                else return "Lo sentimos no se ha podido realizar la consulta ";
 
             }
 
@@ -96,8 +95,6 @@ public class HttpPost extends AsyncTask<String, Void, String>{
             System.out.println("RESPUESTA desde httpPost: "+result);
             Intent intent = new Intent("httpPost").putExtra("jsonRespuesta", result);
             context.sendBroadcast(intent);
-
-
-        httpCon.disconnect();
+           httpCon.disconnect();
     }
 }

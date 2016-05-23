@@ -186,7 +186,7 @@ public class IniciarSesion extends AppCompatActivity {
                     termino();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    System.out.println("ESTUUUUPIDO");
+                    Toast.makeText(context, "Usuario y/o contraseña incorrectas", Toast.LENGTH_SHORT).show();
                     showProgress(false);
                 }
         }

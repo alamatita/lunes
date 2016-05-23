@@ -35,10 +35,12 @@ public class Principal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         usuario = (Usuario) getIntent().getExtras().getSerializable("usuario");
-        boton1 = (Button) findViewById(R.id.botonEliminar);
-        usuId = (EditText) findViewById(R.id.idUsuario);
-       // if (!usuario.isEsAdministrador()) boton1.setVisibility(View.INVISIBLE);
+        transaccion = getFragmentManager().beginTransaction();
 
+        transaccion.replace(R.id.fragment_container, new Inicio(usuario), "inicio");
+        new Principal();
+        transaccion.addToBackStack(null);
+        transaccion.commit();
 
     }
 

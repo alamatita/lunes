@@ -3,8 +3,13 @@
     android:icon="@drawable/logo">
 
     <item
+        android:id="@+id/inicio"
+        android:title="inicio" />
+    <item
         android:id="@+id/explorar"
         android:title="Explorar" />
+
+
 
     <item
         android:id="@+id/anadirActividad"

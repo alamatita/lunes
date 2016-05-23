@@ -1,13 +1,17 @@
 package com.recreu.recreu.views;
 
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -26,8 +30,12 @@ import android.widget.Toast;
 import cl.recreu.recreu.taller_android_bd.R;
 
 import com.recreu.recreu.MainActivity;
+import com.recreu.recreu.Modelos.Usuario;
 import com.recreu.recreu.controllers.HttpPost;
 import com.recreu.recreu.utilities.SystemUtilities;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -138,8 +146,6 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                 if (su.isNetworkAvailable()) {
                     try {
                         AsyncTask resp = new HttpPost(this.getApplicationContext()).execute(usuStr, URL_GET);
-                        Toast.makeText(this, "se agregó a ", Toast.LENGTH_SHORT).show();
-
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -150,7 +156,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
             } catch (Exception e) {
                 System.out.println("Hola hola: error: " + e.toString());
             }
-            finish();
+
         }
 
     }
@@ -186,7 +192,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                         else mes= ""+(monthOfYear+1);
                         String dia;
                         if (dayOfMonth<10) dia="0"+(dayOfMonth);
-                        else dia= ""+(dayOfMonth+1);
+                        else dia= ""+(dayOfMonth);
 
                         fecha.setText( year + "-" + mes + "-" + dia);
 
@@ -195,5 +201,38 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         datePickerDialog.show();
 
     }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        this.registerReceiver(receiver, new IntentFilter("httpPost"));
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        this.unregisterReceiver(receiver);
+    }
+
+    private BroadcastReceiver receiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+
+
+            String response = intent.getStringExtra("jsonRespuesta");
+
+            try {
+                JSONObject resp = new JSONObject(response);
+                Toast.makeText(context,resp.getString("mensaje"), Toast.LENGTH_SHORT).show();
+                finish();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
 }
