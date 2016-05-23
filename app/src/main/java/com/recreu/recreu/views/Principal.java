@@ -67,9 +67,24 @@ public class Principal extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+
+
+            case R.id.inicio:
+
+                if ( getFragmentManager().findFragmentByTag("inicio") == null) {
+                    transaccion = getFragmentManager().beginTransaction();
+
+                    transaccion.replace(R.id.fragment_container, new Inicio(usuario), "inicio");
+                    new Principal();
+                    transaccion.addToBackStack(null);
+                    transaccion.commit();
+
+                }
+                break;
+
             case R.id.anadirActividad:
 
-                if (!(getFragmentManager().findFragmentByTag("nuevaActividad") != null && getFragmentManager().findFragmentByTag("isActiveNewItem").isVisible())) {
+                if ( getFragmentManager().findFragmentByTag("nuevaActividad") == null) {
                     transaccion = getFragmentManager().beginTransaction();
 
                     transaccion.replace(R.id.fragment_container, new NuevaActividad(usuario), "nuevaActividad");
@@ -81,7 +96,7 @@ public class Principal extends AppCompatActivity {
                 break;
 
             case R.id.explorar:
-                if (!(getFragmentManager().findFragmentByTag("explorar") != null && getFragmentManager().findFragmentByTag("isActiveNewItem").isVisible())) {
+                if (getFragmentManager().findFragmentByTag("explorar") == null) {
                     transaccion = getFragmentManager().beginTransaction();
 
                     transaccion.replace(R.id.fragment_container, new Explorar(), "explorar");
@@ -110,7 +125,7 @@ public class Principal extends AppCompatActivity {
 
     public void explorar(View view) {
 
-        if (!(getFragmentManager().findFragmentByTag("explorar") != null && getFragmentManager().findFragmentByTag("isActiveNewItem").isVisible())) {
+        if (getFragmentManager().findFragmentByTag("explorar") == null) {
             transaccion = getFragmentManager().beginTransaction();
 
             transaccion.replace(R.id.fragment_container, new Explorar(usuario), "explorar");
@@ -122,10 +137,23 @@ public class Principal extends AppCompatActivity {
 
     }
     public void irAEliminar(View view){
-        if (!(getFragmentManager().findFragmentByTag("explorar") != null && getFragmentManager().findFragmentByTag("isActiveNewItem").isVisible())) {
+        if (getFragmentManager().findFragmentByTag("eliminar") == null) {
             transaccion = getFragmentManager().beginTransaction();
 
             transaccion.replace(R.id.fragment_container, new EliminarUsuario(), "eliminar");
+            new Principal();
+            transaccion.addToBackStack(null);
+            transaccion.commit();
+
+        }
+
+    }
+
+    public void crearActividad(View view){
+        if (getFragmentManager().findFragmentByTag("nuevaActividad") == null) {
+            transaccion = getFragmentManager().beginTransaction();
+
+            transaccion.replace(R.id.fragment_container, new NuevaActividad(usuario), "nuevaActividad");
             new Principal();
             transaccion.addToBackStack(null);
             transaccion.commit();
