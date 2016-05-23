@@ -18,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -40,7 +41,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
     private DatePicker calendario;
     private Button botonOk, botonFecha;
     private int mYear, mMonth, mDay;
-    private EditText fecha;
+    private TextView fecha;
     private String URL_GET = "http://10.0.2.2:8080/javaee/usuarios";
     private EditText password;
 
@@ -57,49 +58,112 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
         masculino = (RadioButton) findViewById(R.id.masculino);
         botonOk = (Button) findViewById(R.id.Ok);
         botonFecha = (Button) findViewById(R.id.botonFechaNacimiento);
-        fecha = (EditText)findViewById(R.id.fechaNacimiento);
+        fecha = (TextView)findViewById(R.id.fechaNacimiento);
         password=(EditText)findViewById(R.id.password);
         botonFecha.setOnClickListener(this);
 
     }
 
     public void okCrearUsuario(View vista){
-        Toast notificacion=Toast.makeText(this,"Creando al Usuario ",Toast.LENGTH_LONG);
-        notificacion.show();
+
+        setErrores();
+        boolean cancelar = false;
+        View foco = null;
 
         boolean sexo  = masculino.isChecked();
+        String apM= apellidoMaterno.getText().toString();
+        String apP=apellidoPaterno.getText().toString();
+        String pN = primerNombre.getText().toString();
+        String sN= segundoNombre.getText().toString();
+        String corr = correo.getText().toString();
+        String ps = password.getText().toString();
+        String fN = fecha.getText().toString();
 
-        //  String usuStr= "{\"primerNombre\":\"" + primerNombre.getText().toString()+ "\",\"segundoNombre\":\"" + segundoNombre.getText().toString()+ "\",\"correo\":\"" + segundoNombre.getText().toString()+ ""}";//DEBE MEJORARSE ESTA PARRTE
-        String usuStr = "{\"apellidoMaterno\":\""+apellidoMaterno.getText().toString()+
-                "\",\"apellidoPaterno\":\""+apellidoPaterno.getText().toString()+
-                "\",\"primerNombre\":\""+primerNombre.getText().toString()+
-                "\",\"segundoNombre\":\""+segundoNombre.getText().toString()+
-                "\",\"correo\":\""+correo.getText().toString()+
-                "\",\"password\":\""+password.getText().toString()+
-                "\",\"fechaNacimiento\":\""+fecha.getText().toString()+
-                "\", \"sexo\":"+sexo+
-                ",\"esAdministrador\": false}";
-        System.out.println(usuStr);
-        try {
-            SystemUtilities su = new SystemUtilities(this.getApplicationContext());
+        if (apM.isEmpty()){
+            apellidoMaterno.setError("debe ingresar su apellido");
+            foco = apellidoMaterno;
+            cancelar = true;
+        }
+        if (apP.isEmpty()){
+            apellidoPaterno.setError("debe ingresar su apellido");
+            foco = apellidoPaterno;
+            cancelar = true;
+        }
+        if (pN.isEmpty()){
+            primerNombre.setError("debe ingresar su nombre");
+            foco = primerNombre;
+            cancelar = true;
+        }
+        if (sN.isEmpty()){
+            segundoNombre.setError("no debe ser vacío");
+            foco = segundoNombre;
+            cancelar = true;
+        }
+        if (corr.isEmpty()||corr.contains("@usach.cl")){
+            correo.setError("debe ingresar el correo sin @usach.cl");
+            foco = correo;
+            cancelar = true;
+        }
+        if (ps.isEmpty()||ps.length()<6){
+            password.setError("mínimo 6 caracteres");
+            foco = password;
+            cancelar = true;
+        }
+        if (fN.isEmpty()||fN.length()!=10){
+            fecha.setError("debe ingresar una fecha valida");
+            foco = fecha;
+            cancelar = true;
+        }
+        if (cancelar){
+            foco.requestFocus();
+        }
 
-            if (su.isNetworkAvailable()) {
-                try {
-                    AsyncTask resp = new HttpPost(this.getApplicationContext()).execute(usuStr,URL_GET);
-                    Toast.makeText(this, "se agregó a ", Toast.LENGTH_SHORT).show();
+        else {
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+            //  String usuStr= "{\"primerNombre\":\"" + primerNombre.getText().toString()+ "\",\"segundoNombre\":\"" + segundoNombre.getText().toString()+ "\",\"correo\":\"" + segundoNombre.getText().toString()+ ""}";//DEBE MEJORARSE ESTA PARRTE
+            String usuStr = "{\"apellidoMaterno\":\"" + apM +
+                    "\",\"apellidoPaterno\":\"" + apP +
+                    "\",\"primerNombre\":\"" + pN +
+                    "\",\"segundoNombre\":\"" + sN +
+                    "\",\"correo\":\"" + corr +
+                    "\",\"password\":\"" + ps +
+                    "\",\"fechaNacimiento\":\"" + fN +
+                    "\", \"sexo\":" + sexo +
+                    ",\"esAdministrador\": false}";
+            System.out.println(usuStr);
+            try {
+                SystemUtilities su = new SystemUtilities(this.getApplicationContext());
+
+                if (su.isNetworkAvailable()) {
+                    try {
+                        AsyncTask resp = new HttpPost(this.getApplicationContext()).execute(usuStr, URL_GET);
+                        Toast.makeText(this, "se agregó a ", Toast.LENGTH_SHORT).show();
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
+            } catch (Exception e) {
+                System.out.println("Hola hola: error: " + e.toString());
             }
-
-        } catch (Exception e) {
-            System.out.println("Hola hola: error: "+e.toString());
+            finish();
         }
-        finish();
 
+    }
+
+    public void setErrores(){
+
+        primerNombre.setError(null);
+        segundoNombre.setError(null);
+        apellidoPaterno.setError(null);
+        apellidoMaterno.setError(null);
+        correo.setError(null);
+        fecha.setError(null);
+        password.setError(null);
 
     }
 
@@ -121,7 +185,7 @@ public class CrearUsuario extends AppCompatActivity implements View.OnClickListe
                         if (monthOfYear<9) mes="0"+(monthOfYear+1);
                         else mes= ""+(monthOfYear+1);
                         String dia;
-                        if (dayOfMonth<9) dia="0"+(dayOfMonth+1);
+                        if (dayOfMonth<10) dia="0"+(dayOfMonth);
                         else dia= ""+(dayOfMonth+1);
 
                         fecha.setText( year + "-" + mes + "-" + dia);

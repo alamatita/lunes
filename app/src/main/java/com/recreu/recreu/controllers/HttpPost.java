@@ -86,12 +86,12 @@ public class HttpPost extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String requestresult) {
         super.onPostExecute(requestresult);
         System.out.println(requestresult );
-        String result = "nada";
+        String result;
             try {
                 result =  new Scanner(httpCon.getInputStream(), "UTF-8").useDelimiter("\\A").next();
             } catch (Exception e) {
                 e.printStackTrace();
-                result="nada";
+                result="{\"mensaje\":\""+requestresult+"\"}";
             }
             System.out.println("RESPUESTA desde httpPost: "+result);
             Intent intent = new Intent("httpPost").putExtra("jsonRespuesta", result);

@@ -56,18 +56,14 @@ public class IniciarSesion extends AppCompatActivity {
         String passStr = password.getText().toString();
         String correoStr = correo.getText().toString();
 
-        /*if (TextUtils.isEmpty(passStr) || !esPasswordValido(passStr)) {
+        if (TextUtils.isEmpty(passStr) || !esPasswordValido(passStr)) {
             password.setError("mínimo 6 caracteres");
             foco = password;
             cancelar = true;
-        }*/
+        }
 
         if (TextUtils.isEmpty(correoStr)) {
             correo.setError("debe ingresar un email");
-            foco = correo;
-            cancelar = true;
-        } else if (!esCorreoValido(correoStr)) {
-            correo.setError("el email ingresado debe ser dominio usach");
             foco = correo;
             cancelar = true;
         }
@@ -78,9 +74,7 @@ public class IniciarSesion extends AppCompatActivity {
             foco.requestFocus();
 
         } else {
-            //CREA EL LOGIN Usuario!!!!
-            Toast.makeText(this, "iniciando sesion", Toast.LENGTH_SHORT).show();
-            showProgress(true);
+
 
 
 
@@ -114,11 +108,6 @@ public class IniciarSesion extends AppCompatActivity {
         }
 
 
-    }
-
-    public boolean esCorreoValido(String correo) {
-
-        return correo.contains("@usach.cl");
     }
 
     public boolean esPasswordValido(String pass){
