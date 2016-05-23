@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#428BCA</color>
-    <color name="colorPrimaryDark">#428BCA</color>
+    <color name="colorPrimary">#ff9800</color>
+    <color name="colorPrimaryDark">#f95909</color>
     <color name="colorAccent">#57B257</color>
     <color name="RECREU">#FFB332</color>
 

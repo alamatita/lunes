@@ -2,6 +2,7 @@ package com.recreu.recreu.views;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import com.recreu.recreu.Modelos.Actividad;
 import com.recreu.recreu.Modelos.Usuario;
@@ -22,25 +25,27 @@ import java.util.Date;
 import cl.recreu.recreu.taller_android_bd.R;
 
 
+
 public class NuevaActividad extends Fragment implements View.OnClickListener {
-   // private Actividad actividad;
     private View vistaActividad;
-    private  Button agregarActividad;
-    private EditText titulo, cuerpo, requisitos,personitas;
+    private Button agregarActividad, botonFecha, botonHoraInicio;
+    private EditText titulo, cuerpo, requisitos, personitas;
+    private EditText duracion;
     private EditText fecha;
-    private Date fechainicio;
-    private  String duracion,strgFecha,strgDuracion;
-   // private int mYear, mMonth, mDay;
-    private  int maximoPersonas;
-    private  float x,y;
-    private final String URL_GET = "http://10.0.2.2:8080/javaee/actividades";
+    private EditText horainicio;
+    private String strgFecha, strgDuracion;
+    private int mYear, mMonth, mDay;
+    private int maximoPersonas;
+    private String fechainicio;
+    private float x, y;
+    private Spinner spiner;
+    private final String URL_POST = "http://10.0.2.2:8080/javaee/actividades";
     private Context c;
     private Usuario usuario;
 
 
-
     public NuevaActividad(Usuario usu) {
-        this.usuario=usu;
+        this.usuario = usu;
     }
 
     @Override
@@ -49,93 +54,146 @@ public class NuevaActividad extends Fragment implements View.OnClickListener {
         vistaActividad = inflater.inflate(R.layout.nueva_actividad, container, false);
         titulo = (EditText) vistaActividad.findViewById(R.id.titulo);
         cuerpo = (EditText) vistaActividad.findViewById(R.id.descripcion);
-        requisitos =(EditText) vistaActividad.findViewById(R.id.requisitos);
-        //fecha =(EditText) vistaActividad.findViewById(R.id.fecha);
+        requisitos = (EditText) vistaActividad.findViewById(R.id.requisitos);
+        personitas = (EditText) vistaActividad.findViewById(R.id.cupo);
+        duracion = (EditText) vistaActividad.findViewById(R.id.duracion);
 
-        personitas  =(EditText)vistaActividad.findViewById(R.id.cupo) ;
+        fecha = (EditText) vistaActividad.findViewById(R.id.fechainicio);
+        botonFecha = (Button) vistaActividad.findViewById(R.id.botonFecha);
+        botonFecha.setOnClickListener(this);
+
+        Spinner spiner = (Spinner) vistaActividad.findViewById(R.id.spinner);  // CATEGORIAUS
+
+
+        horainicio = (EditText) vistaActividad.findViewById(R.id.horainicio);
+
+        botonHoraInicio = (Button) vistaActividad.findViewById(R.id.botonHoraInicio);
+        botonHoraInicio.setOnClickListener(this);
+
         agregarActividad = (Button) vistaActividad.findViewById(R.id.botonAgregarActividad);
         agregarActividad.setOnClickListener(this);
 
-       // duracion = vistaActividad.findViewById(R.id.duracion); CAMBIAR MODO INGRESO DURACION
-        duracion = "02:00:10-03:00";
-        strgDuracion=duracion.toString();
 
-        EditText personitas  =(EditText)vistaActividad.findViewById(R.id.cupo) ;
+        //  fechainicio=(DatePicker)vistaActividad.findViewById(R.id.fechainicio);
+
+        personitas = (EditText) vistaActividad.findViewById(R.id.cupo);
         return vistaActividad;
     }
 
 
-
     @Override
     public void onClick(View v) {
-//
-//
-// INGRESAR AQUI COORDENADAS MAPA
-        x= 123;
-        y=456;
 
-        String cupos = personitas.getText().toString();
-        maximoPersonas = Integer.parseInt(cupos);
+        switch (v.getId()) {
+            case R.id.botonAgregarActividad:
+                x = 123;
+                y = 456;
 
-        Calendar cal = Calendar.getInstance(); // toma hora de ahora :(
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        strgFecha = sdf.format(cal.getTime());
-        System.out.println("stringfecha : " +strgFecha);
+                String cupos = personitas.getText().toString();
+                maximoPersonas = Integer.parseInt(cupos);
 
-            // creo objeto con atributos ingresados en la vista NuevaActividad
-           //actividad = new Actividad(titulo.getText().toString(),cuerpo.getText().toString(),requisitos.getText().toString(),fechainicio ,null, x,y,0,0,maximoPersonas);
-
-            if ( titulo.getText().toString().length() == 0  ){
-               Toast.makeText(c, " Debe ingresar un titulo ", Toast.LENGTH_SHORT).show();
-            }
-            if ( cuerpo.getText().toString().length() == 0  ){
-                Toast.makeText(c, " Debe ingresar una descripción ", Toast.LENGTH_SHORT).show();
-             }
-            if ( requisitos.getText().toString().length() == 0  ){
-                Toast.makeText(c, " Debe ingresar uno o mas requisitos ", Toast.LENGTH_SHORT).show();
-             }
-            if ( maximoPersonas  <1 ){
-                 Toast.makeText(c, " Debe ingresar cupos ", Toast.LENGTH_SHORT).show();
-             }
+                System.out.println("FECHITA CALENDARIO : " + fecha.getText().toString());
 
 
- // actualizar WAR y AGREGARLE MAXIMO PERSONAAS al json
-        String nuevaActividad = "{\"cuerpoActividad\":\""+cuerpo.getText().toString()+
-                //"\",\"duracionEstimada\":\""+strgDuracion+
-                "\",\"duracionEstimada\":\" "+strgDuracion+" \" ,\"fechaInicio\":\"2016-05-02T08:15:03-03:00\"," +
-              //  "\",\"fechaInicio\":\""+strgFecha+
-                "\"requerimientosActividad\":\""+requisitos.getText().toString()+
-                "\",\"tipo\":{ \"tipoId\":2}"+  // esto es el tipo ID de la actividad,, y escribendo esto me acabo de dar cuenta que tengo que mostrarle una lista a elegir al usuaio :C
-                ",\"tituloActividad\":\""+titulo.getText().toString()+
-               "\",\"organizador\":{ \"usuarioId\":4}"+
-              //  "\",\"organizador\":{ \""+usuario.getId()+"\":4}"+  VA ESTA LINEA EN JSON, pero falata usuario
-                ", \"ubicacionActividadX\":"+x+
-                ",\"ubicacionActividadY\":"+y+"}";
-
-
-       //  System.out.println(nuevaActividad);
-
-            try {
-                SystemUtilities su = new SystemUtilities(getActivity().getApplicationContext());
-                if (su.isNetworkAvailable()) {
-                    try {
-                        AsyncTask resp = new HttpPost(getActivity().getApplicationContext()).execute(nuevaActividad,URL_GET);
-                        Toast.makeText(getActivity(), " Agregando Actividad ...   ", Toast.LENGTH_SHORT).show();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                strgDuracion = "" + duracion.getText().toString() + ":00-03:00";
+                strgDuracion = "01:30:00-03:00";
+                if (titulo.getText().toString().length() == 0) {
+                    Toast.makeText(c, " Debe ingresar un titulo ", Toast.LENGTH_SHORT).show();
                 }
-            } catch (Exception e) {
-            }
+                if (cuerpo.getText().toString().length() == 0) {
+                    Toast.makeText(c, " Debe ingresar una descripción ", Toast.LENGTH_SHORT).show();
+                }
+                if (requisitos.getText().toString().length() == 0) {
+                    Toast.makeText(c, " Debe ingresar uno o mas requisitos ", Toast.LENGTH_SHORT).show();
+                }
+                if (maximoPersonas < 1) {
+                    Toast.makeText(c, " Debe ingresar cupos ", Toast.LENGTH_SHORT).show();
+                }
 
+
+                // AGREGARLE MAXIMO PERSONAAS al json
+                String nuevaActividad = "{\"cuerpoActividad\":\"" + cuerpo.getText().toString() +
+                        //"\",\"duracionEstimada\":\""+strgDuracion+
+                        "\",\"duracionEstimada\":\" " + strgDuracion + " \" ,\"fechaInicio\":\"" + fecha.getText().toString() + "\"," +
+                        //  "\",\"fechaInicio\":\""+strgFecha+
+                        "\"requerimientosActividad\":\"" + requisitos.getText().toString() +
+                        "\",\"tipo\":{ \"tipoId\":2}" +
+                        ",\"tituloActividad\":\"" + titulo.getText().toString() +
+                        "\",\"organizador\":{ \"usuarioId\":"+usuario.getUsuarioId()+"}" +
+                        // "\",\"organizador\":{ \""+usuario.getUsuarioId()+"\"}"+ //               PONER ESTA LINEA CUANDO SE INGRESE LOGIN
+                        ", \"ubicacionActividadX\":" + x +
+                        ",\"ubicacionActividadY\":" + y + "}";
+                System.out.println(" AGREGANDO ACTIVIDAD: " + nuevaActividad);
+
+                try {
+                    SystemUtilities su = new SystemUtilities(getActivity().getApplicationContext());
+                    if (su.isNetworkAvailable()) {
+                        try {
+                            AsyncTask resp = new HttpPost(getActivity().getApplicationContext()).execute(nuevaActividad, URL_POST);
+                            Toast.makeText(getActivity(), " Agregando Actividad ...   ", Toast.LENGTH_SHORT).show();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (Exception e) {
+                }
+
+
+                break;
+
+            case R.id.botonFecha:
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        String mes;
+                        if (monthOfYear < 9) mes = "0" + (monthOfYear + 1);
+                        else mes = "" + (monthOfYear + 1);
+                        String dia;
+                        if (dayOfMonth < 9) dia = "0" + (dayOfMonth + 1);
+                        else dia = "" + (dayOfMonth + 1);
+
+                        fecha.setText(year + "-" + mes + "-" + dia);
+
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+                break;
+
+
+            case R.id.botonHoraInicio:
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
+                        if (selectedHour < 9)
+                            horainicio.setText("0" + selectedHour + ":" + selectedMinute);
+
+                        if (selectedMinute < 9)
+                            horainicio.setText(selectedHour + ":" + "0" + selectedMinute);
+
+                        if (selectedHour < 9 && selectedMinute < 9)
+                            horainicio.setText("0" + selectedHour + ":" + "0" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                mTimePicker.setTitle("Selecciona hora Inicio");
+                mTimePicker.show();
+                break;
+
+        }
     }
-
-
-
-
-
-
-
-
 }
+
+
+

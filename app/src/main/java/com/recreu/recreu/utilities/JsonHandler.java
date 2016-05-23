@@ -2,6 +2,8 @@ package com.recreu.recreu.utilities;
 
 import android.util.Log;
 import com.recreu.recreu.Modelos.Actividad;
+import com.recreu.recreu.Modelos.Usuario;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,10 +12,7 @@ import org.json.JSONObject;
 public class JsonHandler {
 
 
-
-
-
-    // Recibo un JSONArray en forma de String y devuelve un String[] con los actores
+    // Recibo un JSONArray en forma de String y devuelve un array Actividades
     public Actividad[] getActividades(String actividades) {
         try {
             JSONArray ja = new JSONArray(actividades);
@@ -23,16 +22,6 @@ public class JsonHandler {
 
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject jsonActividad = ja.getJSONObject(i);
-
-          //      String dato = jsonActividad.getString("fechaInicio");
-         //       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-         //       Date fecha_inicio = (Date) sdf.parse(dato);
-
-     //            dato = row.getString("duracionEstimada");
-      //           sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       //          long ms = sdf.parse(dato).getTime();
-     //            Time duracion_estimada = new Time(ms);
-
                 String dato=jsonActividad.getString("ubicacionActividadX");
                 float x=Float.parseFloat(dato);
 
@@ -46,12 +35,10 @@ public class JsonHandler {
                 dato= jsonActividad.getString("actividadId");
                 int ide_actividad=Integer.parseInt(dato);
 
-               // dato= row.getString("personasMaximas");             DESCOMENTAR ESTO CUANDOS SE ACTUALICE EL .WAR
-               // int cupos=Integer.parseInt(dato);
+                //dato= jsonActividad.getString("personasMaximas");
+                // int cupos=Integer.parseInt(dato);
 
-                // lo que obtengo del JSON lo instancio como nuevaactividad y lo agrego al array que sera retornado
-                actividad = new Actividad(jsonActividad.getString("tituloActividad"),jsonActividad.getString("cuerpoActividad"),jsonActividad.getString("requerimientosActividad"),null,null,x,y,id_tipo,ide_actividad,666);
-
+                actividad = new Actividad(jsonActividad.getString("tituloActividad"),jsonActividad.getString("cuerpoActividad"),jsonActividad.getString("requerimientosActividad"),jsonActividad.getString("fechaInicio"),jsonActividad.getString("duracionEstimada"),x,y,id_tipo,ide_actividad,666);
                 //actividad = new Actividad(row.getString("tituloActividad"),row.getString("cuerpoActividad"),row.getString("requerimientosActividad"),null,null,x,y,null,ide_actividad,cupos);
                 arrayActividades[i] = actividad;
 
@@ -61,24 +48,36 @@ public class JsonHandler {
 
         } catch (JSONException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
-     //   } catch (ParseException e) {
-       //     e.printStackTrace();
+            //   } catch (ParseException e) {
+            //     e.printStackTrace();
         }
         return null;
     }
 
 
-
-
-
-   /* public JSONArray getJsonActividad(Actividad actividad) {
+    public Usuario[] getIdesUsuariosEnAct(String usuarios) {
         try {
-            JSONArray ja = new JSONArray().put(actividad);
-            return ja;
-        } catch (Exception e) {
+            JSONArray ja = new JSONArray(usuarios);
+            Usuario[] arrayIdes = new Usuario[ja.length()];
+            Usuario usuario;
+
+            for (int i = 0; i < ja.length(); i++) {
+                JSONObject jsonUsuario = ja.getJSONObject(i);
+                String dato= jsonUsuario.getString("usuarioId");
+                int ide_usuario=Integer.parseInt(dato);
+                jsonUsuario.getString("primerNombre");
+                usuario = new Usuario(ide_usuario, jsonUsuario.getString("primerNombre"),jsonUsuario.getString("apellidoPaterno"));
+                arrayIdes[i] = usuario;
+            }
+            return arrayIdes;
+
+        } catch (JSONException e) {
             Log.e("ERROR", this.getClass().toString() + " " + e.toString());
+            //   } catch (ParseException e) {
+            //     e.printStackTrace();
         }
         return null;
-    }*/
+    }
+
 
 }

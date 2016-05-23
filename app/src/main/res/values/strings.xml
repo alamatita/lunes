@@ -16,12 +16,20 @@
     <string name="IngreseRequisitos">Ingrese Requisitos actividad</string>
     <string name="nuevaActividad">NUEVA ACTIVIDAD</string>
     <!-- <string name="RequisitosActividad">Requisitos Actividad</string> -->
-    <string name="IngreseDuración">Ingrese Duración Actividad</string>
+    <string name="IngreseDuración">Ingrese duracion en Horas:Minutos</string>
     <string name="Ingresemáximoparticipantes">Ingrese Máximo de Participantes</string>
     <!-- <string name="cupos">Cupos Actividad</string> -->
     <string name="AgregarActividad">Agregar Actividad</string>
-
-
+    <string name="Categoria">Ingrese Categoria Actividad</string>
+    <string name="Tipo">Ingrese Tipo</string>
+    <string-array name="categorias">
+        <item>Deporte</item>
+        <item>Arte</item>
+        <item>Cine</item>
+        <item>Musica</item>
+        <item>Teatro</item>
+        <item>Danza</item>
+    </string-array>
     <!-- Fin strings nueva actividad -->
 
     <string name="iniciarSesion">Iniciar Sesión</string>
@@ -43,6 +51,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 
 </resources>

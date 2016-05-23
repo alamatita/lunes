@@ -200,7 +200,8 @@ public class IniciarSesion extends AppCompatActivity {
         }
     };
     private void termino(){
-        Intent i = new Intent(this,Inicio.class);
+        System.out.println("BASJOASJO");
+        Intent i = new Intent(this,Principal.class);
         i.putExtra("usuario",usuario);
         startActivity(i);
         finish();

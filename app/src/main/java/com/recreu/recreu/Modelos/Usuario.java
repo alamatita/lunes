@@ -62,6 +62,12 @@ public class Usuario implements Serializable {
         this.sexo=sexo;
         this.esAdministrador=isAd;
     }
+    public Usuario(int ide, String nomb, String apelli){
+        this.usuarioId=ide;
+        this.primerNombre=nomb;
+        this.apellidoPaterno=apelli;
+    }
+
 
     public String getApellidoMaterno() {
         return apellidoMaterno;
@@ -141,5 +147,7 @@ public class Usuario implements Serializable {
     public int getId() {
         return usuarioId;
     }
+
+
 }
 

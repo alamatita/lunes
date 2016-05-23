@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_horizontal"
-              android:orientation="vertical"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:background="#f0ebeb">
 
 
@@ -59,9 +60,7 @@
                 android:id="@+id/titulo"
                 android:layout_gravity="center_horizontal"
                 android:background="#d8d4d4"
-                android:gravity="center"
-                android:autoText="false"
-                android:editable="true" />
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -100,12 +99,6 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
 
-            <AnalogClock
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/analogClock"
-                android:layout_weight="0.16" />
-
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="76dp"
@@ -120,6 +113,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/Categoria"
+                android:gravity="center"
+                android:layout_weight="0.16"
+                android:background="@color/RECREU"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                android:entries="@array/categorias"
+                android:layout_weight="0.16"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:layout_marginLeft="0dp"
+                android:paddingLeft="150dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/IngreseFechayHora"
                 android:gravity="center"
                 android:layout_weight="0.16"
@@ -127,10 +143,16 @@
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
 
-            <CalendarView
+            <EditText
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fechainicio" />
+                android:layout_height="76dp"
+                android:inputType="textPersonName"
+                android:text="00:00:00"
+                android:ems="10"
+                android:background="#d8d4d4"
+                android:gravity="center"
+                android:id="@+id/fechainicio"
+                android:layout_gravity="left" />
 
 
             <!--     <EditText
@@ -144,68 +166,102 @@
                      android:onClick="obtenerFecha"
                      android:clickable="true" />-->
 
-                 <TimePicker
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/horainicio"
-                     android:layout_gravity="center_horizontal" />
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="76dp"
+                android:text="Modificar Fecha"
+                android:background="#57B257"
+                android:textColor="#ffffff"
+                android:id="@+id/botonFecha"
+                android:layout_gravity="right"/>
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:textAppearance="?android:attr/textAppearanceMedium"
-                     android:text="@string/IngreseDuración"
-                     android:gravity="center"
-                     android:layout_weight="0.16"
-                     android:background="@color/RECREU"
-                     android:textColor="#ffffff"
-                     android:textStyle="bold" />
+            <!-- <TimePicker
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/horainicio"
+                      android:layout_gravity="center_horizontal" /> -->
 
-                 <TimePicker
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:id="@+id/duracion"
-                     android:layout_gravity="center_horizontal"
-                     android:timePickerMode="clock" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="76dp"
+                android:inputType="textPersonName"
+                android:text="00:00"
+                android:ems="10"
+                android:background="#d8d4d4"
+
+                android:gravity="center"
+                android:id="@+id/horainicio"
+                android:layout_gravity="left" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="76dp"
+                android:background="#57B257"
+                android:textColor="#ffffff"
+                android:text="Modificar Hora Inicio"
+                android:id="@+id/botonHoraInicio"
+                android:layout_gravity="right"/>
 
 
-                 <TextView
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     android:textAppearance="?android:attr/textAppearanceMedium"
-                     android:text="@string/Ingresemáximoparticipantes"
-                     android:gravity="center"
-                     android:layout_weight="0.16"
-                     android:background="@color/RECREU"
-                     android:textColor="#ffffff"
-                     android:textStyle="bold" />
 
-                 <EditText
-                     android:layout_width="match_parent"
-                     android:layout_height="58dp"
-                     android:inputType="number"
-                     android:text="Cupos Actividad"
-                     android:ems="10"
-                     android:id="@+id/cupo"
-                     android:background="#d8d4d4"
-                     android:gravity="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/IngreseDuración"
+                android:gravity="center"
+                android:layout_weight="0.16"
+                android:background="@color/RECREU"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
-                 <Button
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/AgregarActividad"
-                     android:id="@+id/botonAgregarActividad"
-                     android:layout_gravity="center_horizontal"
-                     android:longClickable="false"
-                     android:onClick="onClick" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:id="@+id/duracion"
+                android:text="ej: 01:30"
+                android:inputType="number"
+                android:background="#d8d4d4"
+                android:gravity="center" />
 
-             </LinearLayout>
-         </ScrollView>
 
-         <TimePicker
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:id="@+id/timePicker2"
-             android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/Ingresemáximoparticipantes"
+                android:gravity="center"
+                android:layout_weight="0.16"
+                android:background="@color/RECREU"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
-     </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:inputType="number"
+                android:text="Cupos Actividad"
+                android:ems="10"
+                android:id="@+id/cupo"
+                android:background="#d8d4d4"
+                android:gravity="center" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AgregarActividad"
+                android:id="@+id/botonAgregarActividad"
+                android:layout_gravity="center_horizontal"
+                android:longClickable="false"
+                android:onClick="onClick" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TimePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePicker2"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

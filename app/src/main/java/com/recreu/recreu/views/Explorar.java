@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class Explorar extends ListFragment {
 
     private BroadcastReceiver br = null;
@@ -36,7 +37,7 @@ public class Explorar extends ListFragment {
     }
 
     public Explorar(Usuario usu) {                    //CONSTRUCTOR CON MODELO USUARIO
-          this.usuario=usu;
+        this.usuario=usu;
     }
 
 
@@ -53,24 +54,24 @@ public class Explorar extends ListFragment {
             @Override
             public void onReceive(Context context, Intent intent) {
                 JsonHandler jh = new JsonHandler();
-                 actividadesLista = jh.getActividades(intent.getStringExtra("data"));
-                                      String[] actividadesString = new String[actividadesLista.length]; //  se va a BORRAR
-                List<String> values=new ArrayList<String>();
+                actividadesLista = jh.getActividades(intent.getStringExtra("data"));
+                String[] actividadesString = new String[actividadesLista.length]; //  se va a BORRAR
+                // List<String> values=new ArrayList<String>();
 
 
                 for (int i=0;i<actividadesLista.length;i++){
-                                      actividadesString[i]=" "+actividadesLista[i].getTitulo()+" ";    // se borrara
-                    values.add(actividadesLista[i].getTitulo());
+                    actividadesString[i]=" "+actividadesLista[i].getTitulo()+" ";    // se borrara
+                    //       values.add(actividadesLista[i].getTitulo());
 
                 }
 
-        //        GridView myGrid=(GridView)getFragmentManager().findFragmentByTag("explorar").getView().findViewById(R.id.grid);
-        //        System.out.println(myGrid);
-        //        myGrid.setAdapter(new ArrayAdapter<String>(context,R.layout.cell,values));
+                //        GridView myGrid=(GridView)getFragmentManager().findFragmentByTag("explorar").getView().findViewById(R.id.grid);
+                //        System.out.println(myGrid);
+                //        myGrid.setAdapter(new ArrayAdapter<String>(context,R.layout.cell,values));
 
 
                 // se adapta el string al campo del fragment al estilo lista  simple /                     SE VA A BORRARRR
-              ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 ,actividadesString);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1 ,actividadesString);
                 setListAdapter(adapter);
             }
         };
@@ -91,12 +92,6 @@ public class Explorar extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) { // ACA VEO LO QUE SETEO A DETALLEACTIVIDAD
 
         actividad=actividadesLista[position];
-      //  Fragment detalleAct = new detalleActividad(actividad);
-    //    Bundle arguments = new Bundle();
-
-       // System.out.println(" EL ID ES :  " +actividad.getActividadId());
-       // arguments.putString("idActividadSeleccionada", (actividad.getActividadId()).toString());
-       // detalleAct.setArguments(arguments);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new detalleActividad(actividad,usuario),"detalleActi");
         transaction.addToBackStack(null);

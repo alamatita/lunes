@@ -13,16 +13,16 @@ public class Actividad {
     private String requerimientos_actividad;
     private Float ubicacion_actividad_x;
     private Float ubicacion_actividad_y;
-    private Date fecha_inicio;
-    private Time duracion_estimada;
+    private String fecha_inicio;
+    private String duracion_estimada;
     private Integer actividadId;
     private Boolean es_activo;
     private Integer tipo_id;
     private Integer maximoPersonas;
+    private Categoria categoria;
 
 
-
-    public Actividad(String tit, String cuer, String req, Date fecha,Time tiemp, Float x, Float y, Integer tipo, Integer ide, Integer max){
+    public Actividad(String tit, String cuer, String req, String fecha,String tiemp, Float x, Float y, Integer tipo, Integer ide, Integer max){
         titulo=tit;
         cuerpo=cuer;
         requerimientos_actividad=req;
@@ -34,9 +34,7 @@ public class Actividad {
         tipo_id=tipo;
         actividadId=ide;
         maximoPersonas=max;
-
     }
-
 
     public String getTitulo() {
         return titulo;
@@ -52,9 +50,9 @@ public class Actividad {
 
     public Float getY() { return ubicacion_actividad_y;  }
 
-    public Date getFechaInicio() { return fecha_inicio;  }
+    public String getFechaInicio() { return fecha_inicio;  }
 
-    public Time getDuracion() {
+    public String getDuracion() {
         return duracion_estimada;
     }
 
@@ -72,7 +70,13 @@ public class Actividad {
 
     public Integer getMaximoPersonas() { return maximoPersonas; }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
 
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
 }

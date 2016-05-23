@@ -15,7 +15,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/brand"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -36,11 +36,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.recreu.recreu.views.CrearUsuario" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
         <activity android:name="com.recreu.recreu.views.IniciarSesion" />
-        <activity android:name="com.recreu.recreu.views.Inicio"></activity>
+        <activity android:name="com.recreu.recreu.views.Principal"></activity>
     </application>
 
 </manifest>

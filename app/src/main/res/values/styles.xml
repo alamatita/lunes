@@ -9,4 +9,8 @@
 
     </style>
 
+    <style name="IniciarApp" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowBackground">@drawable/lion3</item>
+    </style>
+
 </resources>
